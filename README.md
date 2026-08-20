@@ -1,15 +1,25 @@
 # Photo Print Funnel — Setup Guide
 
-Two funnels, built from the "Free Book" / "Upsell-Downsell" style templates
+Four funnels, built from the "Free Book" / "Upsell-Downsell" style templates
 we mapped out earlier, adapted to sell a single canvas print or a 3-print
 series:
 
 ```
 single-photo/   sales page -> upsell -> downsell -> thank-you
 series/         sales page -> upsell -> downsell -> thank-you
+horse/          sales page -> upsell -> downsell -> thank-you
+wave/           sales page -> upsell -> downsell -> thank-you
 assets/         shared CSS + your images go here
 functions/      the Stripe -> Printful "glue" code
 ```
+
+`horse/` and `wave/` are two **standalone, single-photo funnels** — each
+sells one photo on its own (using the same page flow as `single-photo/`,
+but with a size-upgrade upsell/downsell instead of a series bundle). They
+are intentionally kept separate: neither page links to or mentions the
+other, so a visitor buying the horse print never sees the wave print, and
+vice versa. If you add more standalone photos later, follow this same
+pattern — a new top-level folder per photo, no cross-links.
 
 Every page has an EDIT-ME comment block at the top listing exactly what to
 change. Nothing here is wired to real payment or fulfillment yet — that's
@@ -22,6 +32,8 @@ placeholders already in the HTML):
 
 - `single-hero.jpg` — the photo featured on the single-photo sales page
 - `series-1.jpg`, `series-2.jpg`, `series-3.jpg` — the three series photos
+- `horse-hero.jpg` — the photo featured on the horse sales page
+- `wave-hero.jpg` — the photo featured on the wave sales page
 
 Then in each HTML file, replace the placeholder `<div class="hero-image
 placeholder">...</div>` with an `<img>` tag, e.g.:
@@ -45,7 +57,7 @@ the obviously better deal.
 
 ## 3. Create Stripe products & Payment Links
 
-You'll need one Stripe Product + Payment Link per offer — 8 total:
+You'll need one Stripe Product + Payment Link per offer — 14 total:
 
 | Funnel | Page | What it sells |
 |---|---|---|
@@ -55,6 +67,12 @@ You'll need one Stripe Product + Payment Link per offer — 8 total:
 | series | index.html | the 3-print bundle |
 | series | upsell.html | size upgrade, all 3 |
 | series | downsell.html | size upgrade, 1 print |
+| horse | index.html | the horse canvas print |
+| horse | upsell.html | size upgrade (16x20 -> 24x36) |
+| horse | downsell.html | premium framing add-on |
+| wave | index.html | the wave canvas print |
+| wave | upsell.html | size upgrade (16x20 -> 24x36) |
+| wave | downsell.html | premium framing add-on |
 
 For each one, in the Stripe Dashboard:
 1. Products > Add product > set the price.
