@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Wave Photo Title] — Fine Art Canvas Print | [Your Name] Photography</title>
+<meta name="description" content="A limited fine art canvas print by [Your Name]. Museum-quality, fade-resistant, ready to hang.">
+
+<!-- ============================================================
+     EDIT-ME CHECKLIST FOR THIS PAGE
+     This is a STANDALONE funnel — it should never link to or mention
+     the horse/ funnel (or any other product). Keep it that way.
+     1. Replace [Your Name] / brand-mark text below with your name or studio name.
+     2. Replace the hero-image placeholder with your real photo:
+          <img src="../assets/img/wave-hero.jpg" alt="Photo title">
+     3. Replace [Wave Photo Title] and the headline/subhead copy.
+     4. Set WAVE_PRICE below to your real canvas price.
+     5. Replace STRIPE_PAYMENT_LINK_WAVE with your real Stripe Payment Link URL
+        for this specific product (see README for how to create it).
+     ============================================================ -->
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand-mark">[YOUR NAME] PHOTOGRAPHY</div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <div class="hero-image placeholder">
+      <!-- Replace this whole placeholder div with:
+      <img src="../assets/img/wave-hero.jpg" alt="[Wave Photo Title]"> -->
+      Your photo goes here<br>(replace with &lt;img src="../assets/img/wave-hero.jpg"&gt;)
+    </div>
+
+    <div class="hero-copy">
+      <div class="badge">One-of-a-Kind Print</div>
+      <h1>[Wave Photo Title]</h1>
+      <p class="subhead">
+        [One or two sentences on the story behind this shot — where it was taken,
+        why you made it, what makes it worth hanging on a wall.]
+      </p>
+
+      <div class="price-row">
+        <span class="price">$[WAVE_PRICE]</span>
+        <span class="price-note">16&quot; × 20&quot; gallery canvas · free shipping</span>
+      </div>
+
+      <a href="STRIPE_PAYMENT_LINK_WAVE" class="btn">Buy This Print — $[WAVE_PRICE]</a>
+      <div class="trust-note">Printed &amp; shipped by Printful · ships in 3–7 business days</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What you're getting</h2>
+    <ul class="specs-grid">
+      <li>Printed on textured, fade-resistant canvas (OBA-free)</li>
+      <li>Acid-free, PH-neutral archival materials</li>
+      <li>1.25&quot; (3.18 cm) gallery-depth stretcher bars</li>
+      <li>Hand-glued solid wood stretcher bars</li>
+      <li>10.15 oz./yd.² heavyweight fabric</li>
+      <li>Mounting brackets included — ready to hang out of the box</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>About the artist</h2>
+    <p class="subhead">
+      [Two or three sentences of your photographer bio — who you are, your style,
+      why someone should trust this print will look great on their wall. This is
+      the section that turns "nice photo" into "I want to own this."]
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  © <span id="year"></span> [Your Name] Photography. All prints made to order.
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
