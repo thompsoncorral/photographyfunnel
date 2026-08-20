@@ -13,8 +13,13 @@
           <img src="../assets/img/single-hero.jpg" alt="Photo title">
      3. Replace [Photo Title] and the headline/subhead copy.
      4. Set PRICE below to your real canvas price.
-     5. Replace STRIPE_PAYMENT_LINK_SINGLE with your real Stripe Payment Link URL
-        for this specific product (see README for how to create it).
+     5. Fill in this product's price_id, variant_id, and image_url in
+        functions/product-config.js (key: "single-index"). No Payment
+        Link needed — checkout happens inline below via Stripe's
+        embedded form, see README section 3.
+     6. Replace STRIPE_PUBLISHABLE_KEY near the bottom of this file with
+        your real Stripe PUBLISHABLE key (starts with pk_ — safe to
+        expose, this is not your secret key).
      ============================================================ -->
 <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -46,7 +51,8 @@
         <span class="price-note">16&quot; × 20&quot; gallery canvas · free shipping</span>
       </div>
 
-      <a href="STRIPE_PAYMENT_LINK_SINGLE" class="btn">Buy This Print — $[PRICE]</a>
+      <button type="button" id="buy-btn" class="btn">Buy This Print — $[PRICE]</button>
+      <div id="checkout-container" style="display:none; margin-top:24px;"></div>
       <div class="trust-note">Printed &amp; shipped by Printful · ships in 3–7 business days</div>
     </div>
   </section>
@@ -80,6 +86,42 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // EDIT ME: replace with your Stripe PUBLISHABLE key (starts with "pk_" —
+  // safe to expose in client-side code; this is NOT your secret key).
+  const stripe = Stripe('STRIPE_PUBLISHABLE_KEY');
+
+  const buyBtn = document.getElementById('buy-btn');
+  const checkoutContainer = document.getElementById('checkout-container');
+
+  buyBtn.addEventListener('click', async () => {
+    buyBtn.disabled = true;
+    const originalLabel = buyBtn.textContent;
+    buyBtn.textContent = 'Loading…';
+
+    try {
+      const res = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product: 'single-index' }),
+      });
+      if (!res.ok) throw new Error('Checkout session request failed');
+      const { clientSecret } = await res.json();
+
+      const checkout = await stripe.initEmbeddedCheckout({ clientSecret });
+      checkoutContainer.style.display = 'block';
+      checkout.mount('#checkout-container');
+      buyBtn.style.display = 'none';
+    } catch (err) {
+      console.error(err);
+      buyBtn.disabled = false;
+      buyBtn.textContent = originalLabel;
+      alert('Something went wrong starting checkout — please try again.');
+    }
+  });
 </script>
 </body>
 </html>
