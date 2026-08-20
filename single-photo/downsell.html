@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Last Offer</title>
+<!-- ============================================================
+     EDIT-ME CHECKLIST
+     1. Shown only if someone declines the full-series upsell.
+     2. This offers just ONE more photo (their choice or a set pick)
+        instead of both, at a smaller discount than the upsell.
+     3. Replace STRIPE_PAYMENT_LINK_DOWNSELL with its own Stripe Payment Link.
+     4. "No thanks" goes straight to thank-you.html
+     ============================================================ -->
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div class="center-page">
+  <div class="wrap">
+    <div class="offer-card">
+      <div class="badge">Last Chance</div>
+      <h1>Just one more, then?</h1>
+      <p class="subhead">
+        No pressure on the full series — but here's [Photo Title 2] on its own,
+        at a smaller discount than the bundle price.
+      </p>
+
+      <div class="hero-image">
+        <!-- <img src="../assets/img/series-2.jpg" alt="Photo 2"> -->
+      </div>
+
+      <div class="price-row" style="justify-content:center; margin-top:24px;">
+        <span class="price">$[DOWNSELL_PRICE]</span>
+        <span class="price-note">one print, canvas, shipped</span>
+      </div>
+
+      <div class="offer-actions">
+        <a href="STRIPE_PAYMENT_LINK_DOWNSELL" class="btn">Add This Print — $[DOWNSELL_PRICE]</a>
+        <a href="thank-you.html" class="btn-ghost">No thanks, I'm all set</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
