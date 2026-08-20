@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Series Title] — 3-Print Canvas Series | [Your Name] Photography</title>
+<meta name="description" content="A 3-print fine art canvas series by [Your Name]. Museum-quality, fade-resistant, ready to hang together.">
+
+<!-- ============================================================
+     EDIT-ME CHECKLIST FOR THIS PAGE
+     1. Replace [Your Name] / brand-mark text below.
+     2. Replace the hero-image placeholder AND the 3 gallery thumbnails
+        with your real photos:
+          <img src="../assets/img/series-1.jpg" alt="...">
+     3. Replace [Series Title] and copy.
+     4. Set PRICE to your bundle price (should be less than 3x single price).
+     5. Replace STRIPE_PAYMENT_LINK_SERIES with your Stripe Payment Link
+        for the bundle product.
+     ============================================================ -->
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand-mark">[YOUR NAME] PHOTOGRAPHY</div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <div class="hero-image placeholder">
+      <!-- Replace with: <img src="../assets/img/series-1.jpg" alt="[Series Title]"> -->
+      Your lead photo goes here<br>(replace with &lt;img src="../assets/img/series-1.jpg"&gt;)
+    </div>
+
+    <div class="hero-copy">
+      <div class="badge">Complete 3-Print Series</div>
+      <h1>[Series Title]</h1>
+      <p class="subhead">
+        [One or two sentences on the story that ties the three images together —
+        a place, a season, a theme — and why they belong on a wall as a set.]
+      </p>
+
+      <div class="price-row">
+        <span class="price">$[SERIES_PRICE]</span>
+        <span class="price-note">all 3 canvases · save vs. buying separately · free shipping</span>
+      </div>
+
+      <a href="STRIPE_PAYMENT_LINK_SERIES" class="btn">Get the Full Series — $[SERIES_PRICE]</a>
+      <div class="trust-note">Printed &amp; shipped by Printful · ships in 3–7 business days</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The three prints</h2>
+    <div class="gallery-strip">
+      <div class="thumb"><!-- <img src="../assets/img/series-1.jpg" alt="Print 1"> --></div>
+      <div class="thumb"><!-- <img src="../assets/img/series-2.jpg" alt="Print 2"> --></div>
+      <div class="thumb"><!-- <img src="../assets/img/series-3.jpg" alt="Print 3"> --></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What you're getting — on every canvas</h2>
+    <ul class="specs-grid">
+      <li>Printed on textured, fade-resistant canvas (OBA-free)</li>
+      <li>Acid-free, PH-neutral archival materials</li>
+      <li>1.25&quot; (3.18 cm) gallery-depth stretcher bars</li>
+      <li>Hand-glued solid wood stretcher bars</li>
+      <li>10.15 oz./yd.² heavyweight fabric</li>
+      <li>Mounting brackets included — ready to hang out of the box</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>About the artist</h2>
+    <p class="subhead">
+      [Two or three sentences of your photographer bio — who you are, your style,
+      why someone should trust this series will look great on their wall.]
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  © <span id="year"></span> [Your Name] Photography. All prints made to order.
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
