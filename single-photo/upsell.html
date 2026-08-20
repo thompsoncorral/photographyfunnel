@@ -6,15 +6,18 @@
 <title>Wait — Complete the Series</title>
 <!-- ============================================================
      EDIT-ME CHECKLIST
-     1. This page is shown right after someone buys the single photo.
-        Link your Stripe "thank you" redirect (after successful checkout)
-        to THIS page, e.g. yoursite.com/single-photo/upsell.html
+     1. This page is shown right after someone buys the single photo —
+        that redirect now happens automatically via the return_url set
+        in functions/create-checkout-session.js, no dashboard config
+        needed.
      2. Replace the two thumbnail placeholders with the other 2 photos
         in the series.
      3. Set UPSELL_PRICE to the discounted price for the other 2 prints.
-     4. Replace STRIPE_PAYMENT_LINK_UPSELL with the Stripe Payment Link
-        for "the other 2 photos" bundle.
-     5. Point "No thanks" link to downsell.html
+     4. Fill in this offer's price_id, variant_id, and image_url in
+        functions/product-config.js (key: "single-upsell").
+     5. Replace STRIPE_PUBLISHABLE_KEY near the bottom of this file with
+        your real Stripe PUBLISHABLE key (starts with pk_, safe to expose).
+     6. "No thanks" link points to downsell.html
      ============================================================ -->
 <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -40,11 +43,48 @@
       </div>
 
       <div class="offer-actions">
-        <a href="STRIPE_PAYMENT_LINK_UPSELL" class="btn">Yes — Add Both Prints for $[UPSELL_PRICE]</a>
+        <button type="button" id="buy-btn" class="btn">Yes — Add Both Prints for $[UPSELL_PRICE]</button>
         <a href="downsell.html" class="btn-ghost">No thanks, just the one I bought</a>
       </div>
+      <div id="checkout-container" style="display:none; margin-top:24px;"></div>
     </div>
   </div>
 </div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // EDIT ME: replace with your Stripe PUBLISHABLE key (starts with "pk_" —
+  // safe to expose in client-side code; this is NOT your secret key).
+  const stripe = Stripe('STRIPE_PUBLISHABLE_KEY');
+
+  const buyBtn = document.getElementById('buy-btn');
+  const checkoutContainer = document.getElementById('checkout-container');
+
+  buyBtn.addEventListener('click', async () => {
+    buyBtn.disabled = true;
+    const originalLabel = buyBtn.textContent;
+    buyBtn.textContent = 'Loading…';
+
+    try {
+      const res = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product: 'single-upsell' }),
+      });
+      if (!res.ok) throw new Error('Checkout session request failed');
+      const { clientSecret } = await res.json();
+
+      const checkout = await stripe.initEmbeddedCheckout({ clientSecret });
+      checkoutContainer.style.display = 'block';
+      checkout.mount('#checkout-container');
+      buyBtn.style.display = 'none';
+    } catch (err) {
+      console.error(err);
+      buyBtn.disabled = false;
+      buyBtn.textContent = originalLabel;
+      alert('Something went wrong starting checkout — please try again.');
+    }
+  });
+</script>
 </body>
 </html>
