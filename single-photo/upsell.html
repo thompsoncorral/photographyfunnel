@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wait — Complete the Series</title>
+<!-- ============================================================
+     EDIT-ME CHECKLIST
+     1. This page is shown right after someone buys the single photo.
+        Link your Stripe "thank you" redirect (after successful checkout)
+        to THIS page, e.g. yoursite.com/single-photo/upsell.html
+     2. Replace the two thumbnail placeholders with the other 2 photos
+        in the series.
+     3. Set UPSELL_PRICE to the discounted price for the other 2 prints.
+     4. Replace STRIPE_PAYMENT_LINK_UPSELL with the Stripe Payment Link
+        for "the other 2 photos" bundle.
+     5. Point "No thanks" link to downsell.html
+     ============================================================ -->
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div class="center-page">
+  <div class="wrap">
+    <div class="offer-card">
+      <div class="badge">One-Time Offer — This Page Only</div>
+      <h1>You just bought one. Want the whole series?</h1>
+      <p class="subhead">
+        [Photo Title] is part of a 3-print series. Complete the set now at a
+        discount — this offer disappears once you leave this page.
+      </p>
+
+      <div class="gallery-strip">
+        <div class="thumb"><!-- <img src="../assets/img/series-2.jpg" alt="Photo 2"> --></div>
+        <div class="thumb"><!-- <img src="../assets/img/series-3.jpg" alt="Photo 3"> --></div>
+      </div>
+
+      <div class="price-row" style="justify-content:center; margin-top:24px;">
+        <span class="price">$[UPSELL_PRICE]</span>
+        <span class="price-note">for both remaining prints, canvas, framed &amp; shipped</span>
+      </div>
+
+      <div class="offer-actions">
+        <a href="STRIPE_PAYMENT_LINK_UPSELL" class="btn">Yes — Add Both Prints for $[UPSELL_PRICE]</a>
+        <a href="downsell.html" class="btn-ghost">No thanks, just the one I bought</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
