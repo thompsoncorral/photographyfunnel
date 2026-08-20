@@ -10,9 +10,11 @@
      2. Default offer here is a SIZE UPGRADE (e.g. 16x20 -> 24x36) for
         all three canvases. Swap the copy if you'd rather offer framing,
         a 4th bonus print, or something else.
-     3. Replace STRIPE_PAYMENT_LINK_UPSELL with the Payment Link for
-        the upgrade (usually a "pay the difference" price).
-     4. "No thanks" goes to downsell.html
+     3. Fill in this offer's price_id and the 3 bundle variant_id/image_url
+        entries in functions/product-config.js (key: "series-upsell").
+     4. Replace STRIPE_PUBLISHABLE_KEY near the bottom of this file with
+        your real Stripe PUBLISHABLE key (starts with pk_, safe to expose).
+     5. "No thanks" link points to downsell.html
      ============================================================ -->
 <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -34,11 +36,48 @@
       </div>
 
       <div class="offer-actions">
-        <a href="STRIPE_PAYMENT_LINK_UPSELL" class="btn">Yes — Upgrade All 3 for +$[UPGRADE_PRICE]</a>
+        <button type="button" id="buy-btn" class="btn">Yes — Upgrade All 3 for +$[UPGRADE_PRICE]</button>
         <a href="downsell.html" class="btn-ghost">No thanks, keep my original size</a>
       </div>
+      <div id="checkout-container" style="display:none; margin-top:24px;"></div>
     </div>
   </div>
 </div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // EDIT ME: replace with your Stripe PUBLISHABLE key (starts with "pk_" —
+  // safe to expose in client-side code; this is NOT your secret key).
+  const stripe = Stripe('STRIPE_PUBLISHABLE_KEY');
+
+  const buyBtn = document.getElementById('buy-btn');
+  const checkoutContainer = document.getElementById('checkout-container');
+
+  buyBtn.addEventListener('click', async () => {
+    buyBtn.disabled = true;
+    const originalLabel = buyBtn.textContent;
+    buyBtn.textContent = 'Loading…';
+
+    try {
+      const res = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product: 'series-upsell' }),
+      });
+      if (!res.ok) throw new Error('Checkout session request failed');
+      const { clientSecret } = await res.json();
+
+      const checkout = await stripe.initEmbeddedCheckout({ clientSecret });
+      checkoutContainer.style.display = 'block';
+      checkout.mount('#checkout-container');
+      buyBtn.style.display = 'none';
+    } catch (err) {
+      console.error(err);
+      buyBtn.disabled = false;
+      buyBtn.textContent = originalLabel;
+      alert('Something went wrong starting checkout — please try again.');
+    }
+  });
+</script>
 </body>
 </html>
