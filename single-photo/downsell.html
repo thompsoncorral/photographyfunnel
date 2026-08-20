@@ -9,8 +9,11 @@
      1. Shown only if someone declines the full-series upsell.
      2. This offers just ONE more photo (their choice or a set pick)
         instead of both, at a smaller discount than the upsell.
-     3. Replace STRIPE_PAYMENT_LINK_DOWNSELL with its own Stripe Payment Link.
-     4. "No thanks" goes straight to thank-you.html
+     3. Fill in this offer's price_id, variant_id, and image_url in
+        functions/product-config.js (key: "single-downsell").
+     4. Replace STRIPE_PUBLISHABLE_KEY near the bottom of this file with
+        your real Stripe PUBLISHABLE key (starts with pk_, safe to expose).
+     5. "No thanks" link points to thank-you.html
      ============================================================ -->
 <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -35,11 +38,48 @@
       </div>
 
       <div class="offer-actions">
-        <a href="STRIPE_PAYMENT_LINK_DOWNSELL" class="btn">Add This Print — $[DOWNSELL_PRICE]</a>
+        <button type="button" id="buy-btn" class="btn">Add This Print — $[DOWNSELL_PRICE]</button>
         <a href="thank-you.html" class="btn-ghost">No thanks, I'm all set</a>
       </div>
+      <div id="checkout-container" style="display:none; margin-top:24px;"></div>
     </div>
   </div>
 </div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // EDIT ME: replace with your Stripe PUBLISHABLE key (starts with "pk_" —
+  // safe to expose in client-side code; this is NOT your secret key).
+  const stripe = Stripe('STRIPE_PUBLISHABLE_KEY');
+
+  const buyBtn = document.getElementById('buy-btn');
+  const checkoutContainer = document.getElementById('checkout-container');
+
+  buyBtn.addEventListener('click', async () => {
+    buyBtn.disabled = true;
+    const originalLabel = buyBtn.textContent;
+    buyBtn.textContent = 'Loading…';
+
+    try {
+      const res = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product: 'single-downsell' }),
+      });
+      if (!res.ok) throw new Error('Checkout session request failed');
+      const { clientSecret } = await res.json();
+
+      const checkout = await stripe.initEmbeddedCheckout({ clientSecret });
+      checkoutContainer.style.display = 'block';
+      checkout.mount('#checkout-container');
+      buyBtn.style.display = 'none';
+    } catch (err) {
+      console.error(err);
+      buyBtn.disabled = false;
+      buyBtn.textContent = originalLabel;
+      alert('Something went wrong starting checkout — please try again.');
+    }
+  });
+</script>
 </body>
 </html>
