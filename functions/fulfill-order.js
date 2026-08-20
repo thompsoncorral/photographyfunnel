@@ -88,6 +88,40 @@ const PRODUCT_MAP = {
     image_url: 'https://yourdomain.com/assets/img/print-ready/photo-1-fullres.jpg',
     label: 'Series downsell — 1 print upgraded',
   },
+
+  // Horse funnel (standalone — never bundled with wave or any other photo)
+  'price_REPLACE_HORSE': {
+    variant_id: 0000, // Printful variant ID for e.g. 16x20 canvas
+    image_url: 'https://yourdomain.com/assets/img/print-ready/horse-fullres.jpg',
+    label: 'Horse print — 16x20 canvas',
+  },
+  'price_REPLACE_HORSE_UPSELL': {
+    variant_id: 0000, // 24x36 variant
+    image_url: 'https://yourdomain.com/assets/img/print-ready/horse-fullres.jpg',
+    label: 'Horse upsell — size upgrade to 24x36',
+  },
+  'price_REPLACE_HORSE_DOWNSELL': {
+    variant_id: 0000, // framed 16x20 variant
+    image_url: 'https://yourdomain.com/assets/img/print-ready/horse-fullres.jpg',
+    label: 'Horse downsell — premium framing add-on',
+  },
+
+  // Wave funnel (standalone — never bundled with horse or any other photo)
+  'price_REPLACE_WAVE': {
+    variant_id: 0000, // Printful variant ID for e.g. 16x20 canvas
+    image_url: 'https://yourdomain.com/assets/img/print-ready/wave-fullres.jpg',
+    label: 'Wave print — 16x20 canvas',
+  },
+  'price_REPLACE_WAVE_UPSELL': {
+    variant_id: 0000, // 24x36 variant
+    image_url: 'https://yourdomain.com/assets/img/print-ready/wave-fullres.jpg',
+    label: 'Wave upsell — size upgrade to 24x36',
+  },
+  'price_REPLACE_WAVE_DOWNSELL': {
+    variant_id: 0000, // framed 16x20 variant
+    image_url: 'https://yourdomain.com/assets/img/print-ready/wave-fullres.jpg',
+    label: 'Wave downsell — premium framing add-on',
+  },
 };
 
 exports.handler = async (event) => {
