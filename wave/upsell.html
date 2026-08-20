@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upgrade Your Print</title>
+<!-- ============================================================
+     EDIT-ME CHECKLIST
+     1. Shown right after someone buys the wave print. Link your
+        Stripe "thank you" redirect (after successful checkout) to
+        THIS page, e.g. yoursite.com/wave/upsell.html
+     2. Default offer here is a SIZE UPGRADE (e.g. 16x20 -> 24x36).
+        Swap the copy if you'd rather offer framing or something else.
+     3. Set WAVE_UPSELL_PRICE and replace STRIPE_PAYMENT_LINK_WAVE_UPSELL
+        with the Payment Link for the upgrade (usually a "pay the
+        difference" price).
+     4. "No thanks" goes to downsell.html
+     Keep this page standalone — no mention of any other photo or funnel.
+     ============================================================ -->
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div class="center-page">
+  <div class="wrap">
+    <div class="offer-card">
+      <div class="badge">One-Time Offer — This Page Only</div>
+      <h1>Go bigger, just this once</h1>
+      <p class="subhead">
+        Upgrade [Wave Photo Title] from 16&quot;×20&quot; to gallery-scale
+        24&quot;×36&quot; for just the difference in print cost — this upgrade
+        won't be offered again after you leave this page.
+      </p>
+
+      <div class="price-row" style="justify-content:center;">
+        <span class="price">+$[WAVE_UPSELL_PRICE]</span>
+        <span class="price-note">to upgrade to 24&quot;×36&quot;</span>
+      </div>
+
+      <div class="offer-actions">
+        <a href="STRIPE_PAYMENT_LINK_WAVE_UPSELL" class="btn">Yes — Upgrade for +$[WAVE_UPSELL_PRICE]</a>
+        <a href="downsell.html" class="btn-ghost">No thanks, keep my original size</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
