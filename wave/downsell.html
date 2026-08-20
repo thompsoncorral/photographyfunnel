@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Last Offer</title>
+<!-- ============================================================
+     EDIT-ME CHECKLIST
+     1. Shown only if someone declines the size-upgrade upsell.
+     2. Default offer here is a premium frame add-on for the original
+        size — smaller ask, smaller price than the upsell.
+     3. Set WAVE_DOWNSELL_PRICE and replace
+        STRIPE_PAYMENT_LINK_WAVE_DOWNSELL with its own Payment Link.
+     4. "No thanks" goes to thank-you.html
+     Keep this page standalone — no mention of any other photo or funnel.
+     ============================================================ -->
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<div class="center-page">
+  <div class="wrap">
+    <div class="offer-card">
+      <div class="badge">Last Chance</div>
+      <h1>Just add the frame, then?</h1>
+      <p class="subhead">
+        No pressure on the bigger canvas — but you can still add a premium
+        solid-wood frame to your original-size print for less.
+      </p>
+
+      <div class="price-row" style="justify-content:center;">
+        <span class="price">+$[WAVE_DOWNSELL_PRICE]</span>
+        <span class="price-note">to add premium framing</span>
+      </div>
+
+      <div class="offer-actions">
+        <a href="STRIPE_PAYMENT_LINK_WAVE_DOWNSELL" class="btn">Add Framing — +$[WAVE_DOWNSELL_PRICE]</a>
+        <a href="thank-you.html" class="btn-ghost">No thanks, I'm all set</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
