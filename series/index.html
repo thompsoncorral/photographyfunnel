@@ -14,8 +14,10 @@
           <img src="../assets/img/series-1.jpg" alt="...">
      3. Replace [Series Title] and copy.
      4. Set PRICE to your bundle price (should be less than 3x single price).
-     5. Replace STRIPE_PAYMENT_LINK_SERIES with your Stripe Payment Link
-        for the bundle product.
+     5. Fill in this offer's price_id and the 3 bundle variant_id/image_url
+        entries in functions/product-config.js (key: "series-index").
+     6. Replace STRIPE_PUBLISHABLE_KEY near the bottom of this file with
+        your real Stripe PUBLISHABLE key (starts with pk_, safe to expose).
      ============================================================ -->
 <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -46,7 +48,8 @@
         <span class="price-note">all 3 canvases · save vs. buying separately · free shipping</span>
       </div>
 
-      <a href="STRIPE_PAYMENT_LINK_SERIES" class="btn">Get the Full Series — $[SERIES_PRICE]</a>
+      <button type="button" id="buy-btn" class="btn">Get the Full Series — $[SERIES_PRICE]</button>
+      <div id="checkout-container" style="display:none; margin-top:24px;"></div>
       <div class="trust-note">Printed &amp; shipped by Printful · ships in 3–7 business days</div>
     </div>
   </section>
@@ -88,6 +91,42 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // EDIT ME: replace with your Stripe PUBLISHABLE key (starts with "pk_" —
+  // safe to expose in client-side code; this is NOT your secret key).
+  const stripe = Stripe('STRIPE_PUBLISHABLE_KEY');
+
+  const buyBtn = document.getElementById('buy-btn');
+  const checkoutContainer = document.getElementById('checkout-container');
+
+  buyBtn.addEventListener('click', async () => {
+    buyBtn.disabled = true;
+    const originalLabel = buyBtn.textContent;
+    buyBtn.textContent = 'Loading…';
+
+    try {
+      const res = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product: 'series-index' }),
+      });
+      if (!res.ok) throw new Error('Checkout session request failed');
+      const { clientSecret } = await res.json();
+
+      const checkout = await stripe.initEmbeddedCheckout({ clientSecret });
+      checkoutContainer.style.display = 'block';
+      checkout.mount('#checkout-container');
+      buyBtn.style.display = 'none';
+    } catch (err) {
+      console.error(err);
+      buyBtn.disabled = false;
+      buyBtn.textContent = originalLabel;
+      alert('Something went wrong starting checkout — please try again.');
+    }
+  });
 </script>
 </body>
 </html>
